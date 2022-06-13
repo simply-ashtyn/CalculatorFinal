@@ -23,6 +23,12 @@ private:
 	wxButton* divide;
 	wxButton* equal;
 
+	wxButton* mod;
+	wxButton* bin;
+	wxButton* hex;
+	wxButton* dec;
+	wxButton* clear;
+
 	wxTextCtrl* textBox;
 public:
 	Main();
