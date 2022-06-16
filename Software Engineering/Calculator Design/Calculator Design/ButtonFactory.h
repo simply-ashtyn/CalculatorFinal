@@ -29,6 +29,6 @@ private:
 	wxButton* dec;
 	wxButton* clear;
 public:
-	void CreateButtons();
+	void CreateButtons(wxWindow* callingWindow);
 };
 

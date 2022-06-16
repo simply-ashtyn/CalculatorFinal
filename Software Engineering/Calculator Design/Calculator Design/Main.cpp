@@ -26,14 +26,13 @@ wxEND_EVENT_TABLE()
 Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), wxSize(300, 450))
 {
 	ButtonFactory factory;
-	factory.CreateButtons();
+	factory.CreateButtons(this);
 	textBox = new wxTextCtrl(this, 122, "", wxPoint(70, 10), wxSize(200, 50));
 }
 
 void Main::OnButtonClick(wxCommandEvent& evt)
 {
 	int id = evt.GetId();
-	//evt.GetEventObject();
 
 	switch (id)
 	{
