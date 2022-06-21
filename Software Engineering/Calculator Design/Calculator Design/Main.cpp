@@ -1,6 +1,9 @@
 #include "Main.h"
 #include "App.h"
 #include "ButtonFactory.h"
+#include "CalculatorProcessor.h"
+#include <iostream>
+#include <string>
 
 wxBEGIN_EVENT_TABLE(Main, wxFrame)
 EVT_BUTTON(100, Main::OnButtonClick)
@@ -33,6 +36,8 @@ Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), wxSiz
 void Main::OnButtonClick(wxCommandEvent& evt)
 {
 	int id = evt.GetId();
+	char delimiter = ' ';
+	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
 
 	switch (id)
 	{
@@ -85,39 +90,81 @@ void Main::OnButtonClick(wxCommandEvent& evt)
 		break;
 	}
 	case 112: {
-		textBox->AppendText("+");
+		processor->number = (int)textBox;
+		delimiter = '+';
+		textBox->Clear();
 		break;
 	}
 	case 113: {
-		textBox->AppendText("-");
+		processor->number = (int)textBox;
+		delimiter = '-';
+		textBox->Clear();
 		break;
 	}
 	case 114: {
-		textBox->AppendText("*");
+		processor->number = (int)textBox;
+		delimiter = '*';
+		textBox->Clear();
 		break;
 	}
 	case 115: {
-		textBox->AppendText("/");
+		processor->number = (int)textBox;
+		delimiter = '/';
+		textBox->Clear();
 		break;
 	}
 	case 116: {
-		textBox->AppendText("=");
+		std::string temp;
+		processor->number2 = (int)textBox;
+		if (delimiter == '+')
+		{
+			textBox->Clear();
+			textBox->AppendText(processor->Add());
+		}
+		else if (delimiter == '-')
+		{
+			textBox->Clear();
+			textBox->AppendText(processor->Subtract());
+		}
+		else if (delimiter == '*')
+		{
+			textBox->Clear();
+			textBox->AppendText(processor->Multiply());
+		}
+		else if (delimiter == '/')
+		{
+			textBox->Clear();
+			textBox->AppendText(processor->Divide());
+		}
+		else if (delimiter == 'M')
+		{
+			textBox->Clear();
+			textBox->AppendText(processor->GetMod());
+		}
 		break;
 	}
-	case 117: {
-		textBox->AppendText("MOD");
+	case 117: { //Mod
+		processor->number = (int)textBox;
+		textBox->Clear();
+		delimiter = 'M';
 		break;
 	}
-	case 118: {
-		textBox->AppendText("BIN");
+	case 118: { //Bin
+		processor->number = (int)textBox;
+		textBox->Clear();
+		textBox->AppendText(processor->GetBinary());
 		break;
 	}
-	case 119: {
-		textBox->AppendText("HEX");
+	case 119: { //Hex
+		processor->number = (int)textBox;
+		textBox->Clear();
+		textBox->AppendText(processor->GetHexadecimal());
 		break;
 	}
-	case 120: {
-		textBox->AppendText("DEC");
+	case 120: { //dec
+		processor->number = (int)textBox;
+		textBox->Clear();
+		textBox->AppendText(processor->GetDecimal());
 		break;
 	}
 	case 121: {
