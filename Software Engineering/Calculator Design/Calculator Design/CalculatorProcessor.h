@@ -31,24 +31,35 @@ public:
 	CalculatorProcessor(CalculatorProcessor& other) = delete;
 	void operator=(const CalculatorProcessor& other) = delete;
 
+		AddCommand add(number, number2);
 
-	/*std::string Subtract()
+		commands->push_back(add);
+
+
+	//std::string Add()
+	//{
+	//	AddCommand add;
+	//	return add.Add(number, number2);
+	//}
+
+	std::string Subtract()
 	{
-		SubtractCommand subtract(number, number2);
-		return std::to_string(result);
+		SubtractCommand subtract;
+		return subtract.Subtract(number, number2);
 	}
+	
 
 	std::string Multiply()
 	{
-		MultiplyCommand multiply(number, number2);
-		return std::to_string(result);
+		MultiplyCommand multiply;
+		return multiply.Multiply(number, number2);
 	}
 
 	std::string Divide()
 	{
-		DivideCommand divide(number, number2);
-		return std::to_string(result);
-	}*/
+		DivideCommand divide;
+		return divide.Divide(number, number2);
+	}
 
 	std::string GetDecimal()
 	{
