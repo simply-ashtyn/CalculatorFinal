@@ -31,7 +31,7 @@ public:
 	CalculatorProcessor(CalculatorProcessor& other) = delete;
 	void operator=(const CalculatorProcessor& other) = delete;
 
-		AddCommand add(number, number2);
+		AddCommand add(number, number2); //lecture format
 
 		commands->push_back(add);
 
