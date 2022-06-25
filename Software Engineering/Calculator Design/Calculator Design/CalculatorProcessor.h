@@ -1,15 +1,23 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "IBaseCommand.h"
+#include "AddCommand.h"
+#include "SubtractCommand.h"
+#include "MultiplyCommand.h"
+#include "DivideCommand.h"
 
 class CalculatorProcessor
 {
 	// All operands (+,-,*,/) will need to be implemented inside the CalculatorProcessor.
 private:
-	static CalculatorProcessor* _processor;
+	static CalculatorProcessor* _processor; 
 	CalculatorProcessor(){}
 public:
+	std::vector<IBaseCommand*> commands;
 	int number = 0;
 	int number2 = 0;
+	int result = 0;
 
 	static CalculatorProcessor* GetInstance()
 	{
@@ -23,29 +31,24 @@ public:
 	CalculatorProcessor(CalculatorProcessor& other) = delete;
 	void operator=(const CalculatorProcessor& other) = delete;
 
-	std::string Add()
-	{
-		float result = number + number2;
-		return std::to_string(result);
-	}
 
-	std::string Subtract()
+	/*std::string Subtract()
 	{
-		float result = number - number2;
+		SubtractCommand subtract(number, number2);
 		return std::to_string(result);
 	}
 
 	std::string Multiply()
 	{
-		float result = number * number2;
+		MultiplyCommand multiply(number, number2);
 		return std::to_string(result);
 	}
 
 	std::string Divide()
 	{
-		int result = number / number2;
+		DivideCommand divide(number, number2);
 		return std::to_string(result);
-	}
+	}*/
 
 	std::string GetDecimal()
 	{
@@ -59,7 +62,7 @@ public:
 		while (tempNum > 0)
 		{
 			int mod = tempNum % 16;
-			if (mod<10)
+			if (mod < 10)
 			{
 				results = std::to_string(mod) + results;
 			}
@@ -96,11 +99,11 @@ public:
 
 	std::string GetBinary()
 	{
-		int tempNum = 0;
+		int tempNum = number;
 		std::string results = "";
 		for (int i = 0; i < 32; i++)
 		{
-			if (number % 2 == 0)
+			if (tempNum % 2 == 0)
 			{
 				results = "0" + results;
 			}
@@ -120,3 +123,4 @@ public:
 	}
 };
 
+CalculatorProcessor* CalculatorProcessor::_processor = nullptr;

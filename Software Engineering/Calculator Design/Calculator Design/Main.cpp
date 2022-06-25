@@ -4,6 +4,12 @@
 #include "CalculatorProcessor.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include "IBaseCommand.h"
+#include "AddCommand.h"
+#include "SubtractCommand.h"
+#include "MultiplyCommand.h"
+#include "DivideCommand.h"
 
 wxBEGIN_EVENT_TABLE(Main, wxFrame)
 EVT_BUTTON(100, Main::OnButtonClick)
@@ -26,6 +32,11 @@ EVT_BUTTON(116, Main::OnButtonClick)
 EVT_BUTTON(121, Main::OnButtonClick)
 wxEND_EVENT_TABLE()
 
+int number = 0;
+int number2 = 0;
+
+CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
+
 Main::Main() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), wxSize(300, 450))
 {
 	ButtonFactory factory;
@@ -37,7 +48,6 @@ void Main::OnButtonClick(wxCommandEvent& evt)
 {
 	int id = evt.GetId();
 	char delimiter = ' ';
-	CalculatorProcessor* processor = CalculatorProcessor::GetInstance();
 
 	switch (id)
 	{
@@ -91,62 +101,28 @@ void Main::OnButtonClick(wxCommandEvent& evt)
 	}
 	case 112: {
 		processor->number = (int)textBox;
-		delimiter = '+';
 		textBox->Clear();
 		break;
 	}
 	case 113: {
 		processor->number = (int)textBox;
-		delimiter = '-';
 		textBox->Clear();
 		break;
 	}
 	case 114: {
 		processor->number = (int)textBox;
-		delimiter = '*';
 		textBox->Clear();
 		break;
 	}
 	case 115: {
 		processor->number = (int)textBox;
-		delimiter = '/';
 		textBox->Clear();
-		break;
-	}
-	case 116: {
-		std::string temp;
-		processor->number2 = (int)textBox;
-		if (delimiter == '+')
-		{
-			textBox->Clear();
-			textBox->AppendText(processor->Add());
-		}
-		else if (delimiter == '-')
-		{
-			textBox->Clear();
-			textBox->AppendText(processor->Subtract());
-		}
-		else if (delimiter == '*')
-		{
-			textBox->Clear();
-			textBox->AppendText(processor->Multiply());
-		}
-		else if (delimiter == '/')
-		{
-			textBox->Clear();
-			textBox->AppendText(processor->Divide());
-		}
-		else if (delimiter == 'M')
-		{
-			textBox->Clear();
-			textBox->AppendText(processor->GetMod());
-		}
 		break;
 	}
 	case 117: { //Mod
 		processor->number = (int)textBox;
 		textBox->Clear();
-		delimiter = 'M';
+		//textBox->AppendText(processor->GetMod());
 		break;
 	}
 	case 118: { //Bin
@@ -169,6 +145,15 @@ void Main::OnButtonClick(wxCommandEvent& evt)
 	}
 	case 121: {
 		textBox->Clear();
+		break;
+	}
+	case 116: {
+		std::string temp;
+		processor->number2 = (int)textBox;
+		for (int i = 0; i < processor->commands.size(); i++)
+		{
+			textBox->AppendText(processor->commands[i]->Execute());
+		}
 		break;
 	}
 	}
